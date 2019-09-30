@@ -1,0 +1,24 @@
+@import '~wolox-equalizer/equalizer';
+
+@import 'layout';
+
+@import 'margins';
+
+@import 'components';
+
+@import 'variables/colors';
+
+@import 'variables/variables';
+
+* {
+  font-family: $font-family;
+  font-size: $font-size-base;
+}
+
+body {
+  background-color: $alto;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+}
