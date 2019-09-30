@@ -27,7 +27,6 @@ export const authSetup = async dispatch => {
 };
 
 export const login = () =>
-  // TODO: Implement call to authentication API here
   new Promise(resolve => {
     setTimeout(() => {
       resolve({ ok: true, data: { sessionToken: 'token' } });

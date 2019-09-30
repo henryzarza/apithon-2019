@@ -6,16 +6,19 @@
 
 @import 'components';
 
-// TODO: Edit this global styles
+@import 'variables/colors';
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, 'Droid Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import 'variables/variables';
+
+* {
+  font-family: $font-family;
+  font-size: $font-size-base;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+body {
+  background-color: $alto;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
