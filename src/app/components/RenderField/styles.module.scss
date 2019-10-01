@@ -1,0 +1,29 @@
+@import 'src/scss/variables/colors';
+@import 'src/scss/variables/variables';
+
+.error {
+  animation: shake 360ms $transition-function;
+  border-color: $carnation;
+}
+
+@keyframes shake {
+  from,
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate3d(10px, 0, 0);
+  }
+}

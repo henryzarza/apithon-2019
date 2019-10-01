@@ -1,0 +1,19 @@
+@import 'src/scss/variables/colors';
+@import 'src/scss/variables/variables';
+
+.input {
+  border: 1px solid $dusty-gray;
+  border-radius: $default-border-radius;
+  color: $cod-gray;
+  height: 43px;
+  padding: 5px 13px;
+  transition: border-color $transition-duration $transition-function;
+
+  &:focus {
+    border-color: $cod-gray;
+  }
+
+  &::placeholder {
+    font-size: #{$font-size-base - 1};
+  }
+}

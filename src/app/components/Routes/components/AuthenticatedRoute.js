@@ -2,9 +2,11 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import PropTypes from 'prop-types';
+import { bool, shape } from 'prop-types';
 
 import Routes from '../../../../constants/routes';
+
+import { USER_TARGET } from '~redux/Auth/constants';
 
 const DEFAULT_PUBLIC_ROUTE = Routes.LOGIN;
 const DEFAULT_PRIVATE_ROUTE = Routes.HOME;
@@ -66,19 +68,15 @@ function AuthenticatedRoute({
   );
 }
 
-AuthenticatedRoute.defaultProps = {
-  /*
-   * TODO Add this if you need it
-   * isPublicRoute: true,
-   */
-  currentUser: false
-};
-
 AuthenticatedRoute.propTypes = {
   ...Route.propTypes, // eslint-disable-line react/forbid-foreign-prop-types
-  currentUser: PropTypes.bool,
-  isPrivateRoute: PropTypes.bool,
-  isPublicRoute: PropTypes.bool
+  currentUser: shape(),
+  isPrivateRoute: bool,
+  isPublicRoute: bool
 };
 
-export default withRouter(connect()(AuthenticatedRoute));
+const mapStateToProps = store => ({
+  currentUser: !!store.auth[USER_TARGET]
+});
+
+export default withRouter(connect(mapStateToProps)(AuthenticatedRoute));

@@ -1,20 +1,27 @@
-.button {
-  border: solid 1px;
-  border-radius: 5px;
-  height: 40px;
-}
-
-.input {
-  height: 30px;
-  border: solid 1px;
-  border-radius: 5px;
-}
+@import 'src/scss/variables/colors';
 
 .form-container {
-  min-height: 500px;
+  height: 100vh;
+  position: relative;
+  width: 100vw;
+
+  &::before {
+    background-color: $limeade;
+    content: '';
+    height: 5px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.img-logo {
+  max-width: 100%;
+  width: 220px;
 }
 
 .section-container {
-  width: 100%;
-  max-width: 280px;
+  max-width: 100%;
+  width: 300px;
 }

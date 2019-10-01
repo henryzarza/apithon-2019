@@ -1,56 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function InputLabel({
-  className,
-  textClassName,
-  dataFor,
-  label,
-  inputClassName,
-  name,
-  placeholder,
-  inputId,
-  inputType,
-  handleChange,
-  disabled
-}) {
+import styles from './styles.module.scss';
+
+function InputLabel({ label, inputClassName, inputId, ...props }) {
   return (
-    <div className={`column start ${className}`}>
-      <label className={`${textClassName} m-bottom-1`} htmlFor={dataFor}>
+    <>
+      <label className="label-text m-bottom-1" htmlFor={inputId}>
         {label}
       </label>
       <input
-        className={inputClassName}
-        name={name}
-        placeholder={placeholder}
+        className={`full-width ${styles.input} ${inputClassName}`}
         id={inputId}
-        type={inputType}
-        onChange={handleChange}
-        disabled={disabled}
+        autoComplete="off"
+        {...props}
       />
-    </div>
+    </>
   );
 }
 
 InputLabel.propTypes = {
-  dataFor: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired,
   inputId: PropTypes.string.isRequired,
-  inputType: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  inputClassName: PropTypes.string,
-  placeholder: PropTypes.string,
-  textClassName: PropTypes.string
+  inputClassName: PropTypes.string
 };
 
 InputLabel.defaultProps = {
-  className: '',
-  inputClassName: '',
-  placeholder: '',
-  textClassName: ''
+  inputClassName: ''
 };
 
 export default InputLabel;
