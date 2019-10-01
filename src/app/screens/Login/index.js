@@ -1,29 +1,37 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bool, string, func } from 'prop-types';
 
 import Login from './layout';
 
+import { actionCreators as authActions } from '~redux/Auth/actions';
+import { USER_TARGET } from '~redux/Auth/constants';
+
 class LoginContainer extends Component {
-  handleLogin = () => {
-    // TODO implement function
-  };
-
-  handleEmailChange = () => {
-    // TODO implement function
-  };
-
-  handlePasswordChange = () => {
-    // TODO implement function
-  };
+  handleSubmit = values => this.props.login(values);
 
   render() {
-    return (
-      <Login
-        onEmailChange={this.handleEmailChange}
-        onPasswordChange={this.handlePasswordChange}
-        onLogin={this.handleLogin}
-      />
-    );
+    const { authLoading, errorMessage } = this.props;
+    return <Login onSubmit={this.handleSubmit} loading={authLoading} errorMessage={errorMessage} />;
   }
 }
 
-export default LoginContainer;
+LoginContainer.propTypes = {
+  authLoading: bool.isRequired,
+  login: func.isRequired,
+  errorMessage: string
+};
+
+const mapStateToProps = store => ({
+  errorMessage: store.auth[`${USER_TARGET}Error`],
+  authLoading: store.auth[`${USER_TARGET}Loading`]
+});
+
+const mapDispatchToProps = dispatch => ({
+  login: authData => dispatch(authActions.login(authData))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginContainer);

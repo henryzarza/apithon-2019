@@ -1,60 +1,33 @@
-import { push } from 'connected-react-router';
+import { completeTypes, createTypes, withPostSuccess } from 'redux-recompose';
 
-import * as AuthService from '../../services/AuthServices';
-import Routes from '../../constants/routes';
-import { stringArrayToObject } from '../../utils/array';
+import { USER_TARGET } from './constants';
 
-/* ------------- Auth actions ------------- */
-export const actions = stringArrayToObject(
-  ['LOGIN', 'LOGIN_SUCCESS', 'LOGIN_FAILURE', 'LOGOUT', 'AUTH_INIT'],
-  '@@AUTH'
-);
+import AuthService from '~services/AuthService';
 
-const privateActionCreators = {
-  loginSuccess(authData) {
-    return {
-      type: actions.LOGIN_SUCCESS,
-      payload: { authData }
-    };
-  },
-  loginFailure(err) {
-    return {
-      type: actions.LOGIN_FAILURE,
-      payload: { err }
-    };
-  }
-};
+const completedTypes = completeTypes(['LOGIN'], ['LOGOUT']);
+
+export const actions = createTypes(completedTypes, '@@AUTH');
 
 export const actionCreators = {
-  init(user) {
-    return {
-      type: actions.AUTH_INIT,
-      payload: { user }
-    };
-  },
-  login(authData) {
-    return async dispatch => {
-      dispatch({ type: actions.LOGIN });
-      try {
-        const response = await AuthService.login(authData);
-
-        if (response.ok) {
-          await AuthService.setCurrentUser(response.data);
-          dispatch(privateActionCreators.loginSuccess(response.data));
-          dispatch(push(Routes.HOME));
-        } else {
-          throw new Error('Invalid credentials');
-        }
-      } catch (e) {
-        dispatch(privateActionCreators.loginFailure(e));
-      }
-    };
-  },
-  logout() {
-    return async dispatch => {
-      await AuthService.removeCurrentUser();
-      dispatch({ type: actions.LOGOUT });
-      dispatch(push(Routes.LOGIN));
-    };
+  login: authData => ({
+    type: actions.LOGIN,
+    target: USER_TARGET,
+    service: AuthService.login,
+    payload: authData,
+    successSelector: response => response.data,
+    failureSelector: response => response.error,
+    injections: [
+      withPostSuccess((_, response) => {
+        AuthService.setCurrentUser(response.data);
+      })
+    ]
+  }),
+  logout: () => dispatch => {
+    AuthService.removeCurrentUser();
+    dispatch({
+      type: actions.LOGOUT,
+      target: USER_TARGET,
+      payload: null
+    });
   }
 };

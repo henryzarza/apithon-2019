@@ -16,7 +16,7 @@ export const maxLength = (length, errorMessage) => val =>
 
 export const pattern = (patternVal, errorMessage) => val => (patternVal.test(val) ? undefined : errorMessage);
 
-export const email = errorMessage => pattern(emailRegex, errorMessage);
+export const email = value => emailRegex.test(value);
 
 export const numericalFourDigits = errorMessage => pattern(numericalFourDigitsRegex, errorMessage);
 

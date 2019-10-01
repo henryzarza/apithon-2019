@@ -3,6 +3,7 @@ import { createBrowserHistory } from 'history';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { reducer as form } from 'redux-form';
 import thunk from 'redux-thunk';
+import { fetchMiddleware } from 'redux-recompose';
 
 import { reducer as auth } from './Auth/reducer';
 
@@ -14,7 +15,7 @@ const reducers = combineReducers({
   router: connectRouter(history)
 });
 
-const middlewares = [thunk, routerMiddleware(history)];
+const middlewares = [thunk, fetchMiddleware, routerMiddleware(history)];
 const enhancers = [];
 
 enhancers.push(applyMiddleware(...middlewares));

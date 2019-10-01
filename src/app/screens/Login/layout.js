@@ -1,56 +1,61 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, bool } from 'prop-types';
 import { t } from 'i18next';
+import { Field, reduxForm } from 'redux-form';
 
-import InputLabel from '../../components/InputLabel';
-import Routes from '../../../constants/routes';
-
-import { FIELDS } from './constants';
+import { FIELDS, FORM_NAME } from './constants';
+import { validate } from './validate';
 import styles from './styles.module.scss';
 
-function Login({ onEmailChange, onPasswordChange, onLogin }) {
+import RenderField from '~components/RenderField';
+
+function Login({ handleSubmit, submitting, loading }) {
   return (
-    <form className={`column center full-width m-top-8 ${styles.formContainer}`} onSubmit={onLogin}>
-      <div className="column center m-bottom-3">
-        <h2 className="m-bottom-1">{t('Login:login')}</h2>
-        <h3>{t('Login:loginExplanation')}</h3>
-      </div>
+    <form className={`column center middle ${styles.formContainer}`} onSubmit={handleSubmit}>
+      <img
+        src="https://pngriver.com/wp-content/uploads/2018/04/Download-Environment-PNG-Picture.png"
+        alt=""
+        className={`m-bottom-4 ${styles.imgLogo}`}
+      />
       <div className={`column m-bottom-2 ${styles.sectionContainer}`}>
-        <InputLabel
-          label={t('Login:email')}
+        <Field
+          name={FIELDS.username}
+          component={RenderField}
+          label={t('Login:username')}
+          placeholder={t('Login:usernamePlaceholder')}
+          inputId={FIELDS.username}
+          className="m-bottom-3"
+        />
+        <Field
           name={FIELDS.email}
-          inputId={FIELDS.email}
-          dataFor={FIELDS.email}
-          inputType="text"
-          inputClassName={`m-bottom-2 full-width ${styles.input}`}
+          component={RenderField}
+          label={t('Login:email')}
           placeholder={t('Login:emailPlaceholder')}
-          handleChange={onEmailChange}
+          inputId={FIELDS.email}
+          className="m-bottom-3"
         />
-        <InputLabel
-          label={t('Login:password')}
+        <Field
           name={FIELDS.password}
-          inputId={FIELDS.password}
-          dataFor={FIELDS.password}
-          inputType="password"
-          inputClassName={`m-bottom-2 full-width ${styles.input}`}
+          component={RenderField}
+          label={t('Login:password')}
           placeholder={t('Login:passwordPlaceholder')}
-          handleChange={onPasswordChange}
+          inputId={FIELDS.password}
+          type="password"
+          className="m-bottom-3"
         />
-      </div>
-      <div className={`column center ${styles.sectionContainer}`}>
-        <button type="submit" className={`full-width m-bottom-1 ${styles.button}`}>
+        <button type="submit" className="primary-button m-bottom-1" disabled={submitting}>
+          {(submitting || loading) && <i className="fas fa-spinner fa-spin m-right-1" />}
           {t('Login:enter')}
         </button>
-        <a href={Routes.RECOVER_PASSWORD}>{t('Login:forgotPassword')}</a>
       </div>
     </form>
   );
 }
 
 Login.propTypes = {
-  onEmailChange: PropTypes.func.isRequired,
-  onLogin: PropTypes.func.isRequired,
-  onPasswordChange: PropTypes.func.isRequired
+  handleSubmit: func.isRequired,
+  loading: bool,
+  submitting: bool
 };
 
-export default Login;
+export default reduxForm({ form: FORM_NAME, validate })(Login);
