@@ -9,18 +9,7 @@ const setCurrentUser = userData => {
 
 const removeCurrentUser = () => LocalStorageService.removeSessionToken();
 
-// const login = userData => api.post('loginFalanet', userData);
-
-const login = userData =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      const data = {
-        ...userData,
-        token: 'token'
-      };
-      resolve({ ok: true, data });
-    }, 1500); // eslint-disable-line no-magic-numbers
-  });
+const login = userData => api.post('users/sessions', userData);
 
 export default {
   login,
