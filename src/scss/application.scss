@@ -49,3 +49,18 @@ button {
     box-shadow: 2px 2px 3px rgba($cod-gray, 0.3);
   }
 }
+
+.main-content {
+  margin: 0 auto;
+  max-width: 100%;
+  min-height: 100vh;
+  padding: 80px 20px 0;
+  width: $content-max-width;
+}
+
+@media only screen and (max-width: $small-device) {
+  .main-content {
+    padding-bottom: 80px;
+    padding-top: 20px;
+  }
+}

@@ -1,0 +1,64 @@
+/* stylelint-disable */
+
+@import 'src/scss/variables/colors';
+@import 'src/scss/variables/variables';
+
+.navbar {
+  background-color: $white;
+  box-shadow: 1px 2px 3px rgba($cod-gray, 0.2);
+  left: 0;
+  padding: 15px 20px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.link {
+  cursor: pointer;
+  transition: all $transition-duration $transition-function;
+
+  &.active,
+  &:hover {
+    color: $rio-grande;
+  }
+
+  & > i {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: $small-device) {
+  .navbar {
+    bottom: 0;
+    box-shadow: 1px -2px 3px rgba($cod-gray, 0.2);
+    padding: 0;
+    top: auto;
+  }
+
+  .title {
+    display: none;
+  }
+
+  .container-links {
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .link {
+    flex: 1;
+    font-size: 15px;
+    justify-content: center;
+    margin-right: 0;
+    padding: 15px;
+
+    &:first-child {
+      border-right: 1px solid $rio-grande;
+    }
+
+    &:hover,
+    &.active {
+      background-color: $coconut-cream;
+    }
+  }
+}
