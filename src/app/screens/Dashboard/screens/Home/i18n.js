@@ -6,7 +6,7 @@ i18next.addResources('es', 'Home', {
   POSITION_UNAVAILABLE: 'Información de localización no disponible.',
   TIMEOUT: 'El requerimiento expiró',
   UNKNOWN: 'Error desconocido.',
-  checkboxTitle: 'Filtrar medios de transporte',
+  checkboxTitle: 'Conoce los puntos de transporte más cercanos',
   startTrip: 'Iniciar recorrido',
   close: 'Cancelar',
   ok: 'Entendido',

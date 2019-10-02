@@ -1,7 +1,7 @@
 {
-  "short_name": "Green",
-  "name": "Green Wolox",
-  "description": "Green Wolox: Apithon 2019",
+  "short_name": "Respira",
+  "name": "Respira",
+  "description": "Respira: Apithon 2019",
   "icons": [
     {
       "src": "icons/48x48.png",
@@ -36,7 +36,7 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#5EACFF",
+  "theme_color": "#5eacff",
   "background_color": "#F6F6F6",
   "orientation": "portrait"
 }
