@@ -7,6 +7,7 @@ import GoogleMap from './components/GoogleMap';
 import Notification from './components/Notification';
 import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI, TRANSPORTATION_TYPES } from './constants';
 import styles from './styles.module.scss';
+import city from './assets/city.svg';
 
 import Modal from '~components/Modal';
 import Checkbox from '~components/Checkbox';
@@ -47,6 +48,11 @@ class Home extends Component {
     }, DEFAULT_TIME_SHOW_NOTI);
   };
 
+  handleStartTrip = () => {
+    // TODO do something here
+    this.props.closeModal();
+  };
+
   render() {
     const { showNotification, errorMessage, currentLocation } = this.state;
     const { openModal, closeModal } = this.props;
@@ -76,11 +82,14 @@ class Home extends Component {
           </div>
         </GoogleMap>
         <Modal>
-          <div className="row">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil architecto beatae porro labore
-            ipsa! Incidunt labore quo quia porro placeat cum? Voluptates asperiores quos adipisci consequuntur
-            facere rem odio illo.
-            <div className="column">
+          <div className="column center middle full-height">
+            <h3 className="subtitle-bold m-bottom-8">{t('Home:modalTitle')}</h3>
+            <img src={city} alt="" className={`m-bottom-8 ${styles.modalImg}`} />
+            <p className="base-text m-bottom-8">{t('Home:modalInfoText')}</p>
+            <div className="column full-width m-bottom-4">
+              <button type="button" className="primary-button m-bottom-5" onClick={this.handleStartTrip}>
+                {t('Home:ok')}
+              </button>
               <button type="button" className="secondary-button" onClick={closeModal}>
                 {t('Home:close')}
               </button>
