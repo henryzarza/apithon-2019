@@ -1,3 +1,4 @@
+/* stylelint-disable */
 @import 'src/scss/variables/colors';
 @import 'src/scss/variables/variables';
 
@@ -15,13 +16,31 @@
   width: 400px;
 }
 
+.container-hidden {
+  @extend .container;
+
+  display: none;
+}
+
 .modal-img {
   width: 250px;
 }
 
 @media only screen and (max-width: $small-device) {
   .container {
-    border-radius: 10px 10px 0 0;
-    bottom: 50px;
+    border-radius: 0 0 20px 20px;
+    bottom: auto;
+    top: 0;
+  }
+
+  .btn-inside {
+    display: none;
+  }
+
+  .container-hidden {
+    border-radius: 20px 20px 0 0;
+    bottom: 70px;
+    display: flex;
+    top: auto;
   }
 }

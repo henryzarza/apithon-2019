@@ -7,6 +7,7 @@ import { fetchMiddleware } from 'redux-recompose';
 
 import { reducer as auth } from './Auth/reducer';
 import { reducer as modal } from './Modal/reducer';
+import { reducer as home } from './Home/reducer';
 
 export const history = createBrowserHistory();
 
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   auth,
   form,
   modal,
+  home,
   router: connectRouter(history)
 });
 

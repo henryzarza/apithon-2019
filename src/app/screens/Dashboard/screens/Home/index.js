@@ -1,34 +1,50 @@
 import React, { Component } from 'react';
 import { t } from 'i18next';
 import { connect } from 'react-redux';
-import { func } from 'prop-types';
+import { func, arrayOf, shape } from 'prop-types';
 
 import GoogleMap from './components/GoogleMap';
 import Notification from './components/Notification';
-import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI, TRANSPORTATION_TYPES } from './constants';
+import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI, TRANSPORTATION_TYPES, TIME_GET_NEAREST } from './constants';
 import styles from './styles.module.scss';
 import city from './assets/city.svg';
 
 import Modal from '~components/Modal';
 import Checkbox from '~components/Checkbox';
 import { actionCreators as modalActions } from '~redux/Modal/actions';
+import { actionCreators as homeActions } from '~redux/Home/actions';
+import { NEAREST_TARGET, MEASUREMENTS_TARGET } from '~redux/Home/constants';
 
 class Home extends Component {
   state = { currentLocation: null, showNotification: false, errorMessage: null };
 
   componentDidMount() {
     this.getCurrentLocation();
+    this.props.getMeasurements();
   }
 
   getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(location => {
-        this.setState({
-          currentLocation: { lat: location.coords.latitude, lng: location.coords.longitude }
-        });
+        this.setState(
+          {
+            currentLocation: { lat: location.coords.latitude, lng: location.coords.longitude }
+          },
+          this.subscribeGetNearest()
+        );
       }, this.showError);
     }
   };
+
+  subscribeGetNearest = () => {
+    this.interval = setInterval(() => {
+      this.props.getNearest(this.state.currentLocation);
+    }, TIME_GET_NEAREST);
+  };
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   showError = error => {
     this.setState(
@@ -55,13 +71,13 @@ class Home extends Component {
 
   render() {
     const { showNotification, errorMessage, currentLocation } = this.state;
-    const { openModal, closeModal } = this.props;
+    const { openModal, closeModal, measurements } = this.props;
     return (
       <>
         <Notification message={errorMessage} isVisible={showNotification} />
-        <GoogleMap currentLocation={currentLocation}>
+        <GoogleMap currentLocation={currentLocation} measurements={measurements}>
           <div className={`column ${styles.container}`}>
-            <span className="base-text m-bottom-2">{t('Home:checkboxTitle')}</span>
+            <span className="base-text bold m-bottom-2">{t('Home:checkboxTitle')}</span>
             <div className="row space-around m-bottom-4">
               {TRANSPORTATION_TYPES.map(el => (
                 <Checkbox
@@ -76,6 +92,11 @@ class Home extends Component {
                 />
               ))}
             </div>
+            <button type="button" className={`primary-button ${styles.btnInside}`} onClick={openModal}>
+              {t('Home:startTrip')}
+            </button>
+          </div>
+          <div className={`row center middle ${styles.containerHidden}`}>
             <button type="button" className="primary-button" onClick={openModal}>
               {t('Home:startTrip')}
             </button>
@@ -103,15 +124,25 @@ class Home extends Component {
 
 Home.propTypes = {
   closeModal: func.isRequired,
-  openModal: func.isRequired
+  getMeasurements: func.isRequired,
+  getNearest: func.isRequired,
+  openModal: func.isRequired,
+  measurements: arrayOf(shape())
 };
 
+const mapStateToProps = store => ({
+  nearest: store.home[NEAREST_TARGET],
+  measurements: store.home[MEASUREMENTS_TARGET]
+});
+
 const mapDispatchToProps = dispatch => ({
+  getNearest: data => dispatch(homeActions.getNearest(data)),
+  getMeasurements: () => dispatch(homeActions.getMeasurements()),
   openModal: () => dispatch(modalActions.openModal()),
   closeModal: () => dispatch(modalActions.closeModal())
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Home);
