@@ -17,8 +17,8 @@
 }
 
 .container-hidden {
-  @extend .container;
 
+  @extend .container;
   display: none;
 }
 
