@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { t } from 'i18next';
 import { connect } from 'react-redux';
 import { func, arrayOf, shape } from 'prop-types';
+import cn from 'classnames';
 
 import GoogleMap from './components/GoogleMap';
 import Notification from './components/Notification';
@@ -16,7 +17,7 @@ import { actionCreators as homeActions } from '~redux/Home/actions';
 import { NEAREST_TARGET, MEASUREMENTS_TARGET } from '~redux/Home/constants';
 
 class Home extends Component {
-  state = { currentLocation: null, showNotification: false, errorMessage: null };
+  state = { currentLocation: null, showNotification: false, errorMessage: null, transportTypeOpen: false };
 
   componentDidMount() {
     this.getCurrentLocation();
@@ -69,14 +70,19 @@ class Home extends Component {
     this.props.closeModal();
   };
 
+  handleClickTypes = () => this.setState(prevState => ({ transportTypeOpen: !prevState.transportTypeOpen }));
+
   render() {
-    const { showNotification, errorMessage, currentLocation } = this.state;
+    const { showNotification, errorMessage, currentLocation, transportTypeOpen } = this.state;
     const { openModal, closeModal, measurements } = this.props;
     return (
       <>
         <Notification message={errorMessage} isVisible={showNotification} />
         <GoogleMap currentLocation={currentLocation} measurements={measurements}>
-          <div className={`column ${styles.container}`}>
+          <div
+            className={cn(`column ${styles.container}`, { [styles.open]: transportTypeOpen })}
+            onClick={this.handleClickTypes}
+          >
             <span className="base-text bold m-bottom-2">{t('Home:checkboxTitle')}</span>
             <div className="row space-around m-bottom-4">
               {TRANSPORTATION_TYPES.map(el => (
@@ -104,7 +110,7 @@ class Home extends Component {
         </GoogleMap>
         <Modal>
           <div className="column center middle full-height">
-            <h3 className="subtitle-bold m-bottom-8">{t('Home:modalTitle')}</h3>
+            <h3 className="subtitle m-bottom-8">{t('Home:modalTitle')}</h3>
             <img src={city} alt="" className={`m-bottom-8 ${styles.modalImg}`} />
             <p className="base-text m-bottom-8">{t('Home:modalInfoText')}</p>
             <div className="column full-width m-bottom-4">

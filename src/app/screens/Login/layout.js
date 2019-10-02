@@ -3,6 +3,7 @@ import { func, bool } from 'prop-types';
 import { t } from 'i18next';
 import { Field, reduxForm } from 'redux-form';
 
+import logo from './assets/logo.svg';
 import { FIELDS, FORM_NAME } from './constants';
 import { validate } from './validate';
 import styles from './styles.module.scss';
@@ -12,11 +13,7 @@ import RenderField from '~components/RenderField';
 function Login({ handleSubmit, submitting, loading }) {
   return (
     <form className={`column center middle ${styles.formContainer}`} onSubmit={handleSubmit}>
-      <img
-        src="https://pngriver.com/wp-content/uploads/2018/04/Download-Environment-PNG-Picture.png"
-        alt=""
-        className={`m-bottom-4 ${styles.imgLogo}`}
-      />
+      <img src={logo} alt="" className={`m-bottom-4 ${styles.imgLogo}`} />
       <div className={`column m-bottom-2 ${styles.sectionContainer}`}>
         <Field
           name={FIELDS.username}
