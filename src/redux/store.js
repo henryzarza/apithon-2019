@@ -6,12 +6,14 @@ import thunk from 'redux-thunk';
 import { fetchMiddleware } from 'redux-recompose';
 
 import { reducer as auth } from './Auth/reducer';
+import { reducer as modal } from './Modal/reducer';
 
 export const history = createBrowserHistory();
 
 const reducers = combineReducers({
   auth,
   form,
+  modal,
   router: connectRouter(history)
 });
 
