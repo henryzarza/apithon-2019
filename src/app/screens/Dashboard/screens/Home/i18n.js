@@ -5,5 +5,7 @@ i18next.addResources('es', 'Home', {
   PERMISSION_DENIED: '¿Nos permites usar tu Geolocalización?',
   POSITION_UNAVAILABLE: 'Información de localización no disponible.',
   TIMEOUT: 'El requerimiento expiró',
-  UNKNOWN: 'Error desconocido.'
+  UNKNOWN: 'Error desconocido.',
+  checkboxTitle: 'Medios de sistema',
+  startTrip: 'Iniciar recorrido'
 });

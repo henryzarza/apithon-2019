@@ -4,6 +4,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-map
 import cn from 'classnames';
 import { shape } from 'prop-types';
 
+import person from './walk.svg';
 import styles from './styles.module.scss';
 import mapStyles from './map-styles';
 import {
@@ -31,11 +32,11 @@ class Map extends Component {
   };
 
   render() {
-    const { currentLocation } = this.props;
+    const { currentLocation, children } = this.props;
     const defaultCenter = currentLocation || { lat: 6.2486, lng: -75.56359 };
     const { Size, Point } = window.google.maps;
     const ICON_MARKER = {
-      url: 'https://image.flaticon.com/icons/svg/10/10624.svg',
+      url: person,
       scaledSize: new Size(MARKER_HEIGHT, MARKER_WIDTH),
       anchor: new Point(MARKER_WIDTH / 2 + MARKER_OFFSET_HORIZONTAL, MARKER_HEIGHT + MARKER_OFFSET_VERTICAL)
     };
@@ -58,6 +59,7 @@ class Map extends Component {
         }}
       >
         <Marker icon={ICON_MARKER} position={defaultCenter} />
+        {children}
       </GoogleMap>
     );
   }
