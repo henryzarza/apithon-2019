@@ -20,7 +20,6 @@ class Home extends Component {
   state = { currentLocation: null, showNotification: false, errorMessage: null, transportTypeOpen: false };
 
   componentDidMount() {
-    this.getCurrentLocation();
     this.props.getMeasurements();
   }
 
@@ -66,8 +65,8 @@ class Home extends Component {
   };
 
   handleStartTrip = () => {
-    // TODO do something here
     this.props.closeModal();
+    this.getCurrentLocation();
   };
 
   handleClickTypes = () => this.setState(prevState => ({ transportTypeOpen: !prevState.transportTypeOpen }));

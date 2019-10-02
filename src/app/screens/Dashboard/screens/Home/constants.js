@@ -54,3 +54,30 @@ export const TRANSPORTATION_TYPES = [
     icon: Tram
   }
 ];
+
+export const MOCK_POINTS = [
+  {
+    lng: -75.59451,
+    lat: 6.22108
+  },
+  {
+    lng: -75.5945,
+    lat: 6.22113
+  },
+  {
+    lng: -75.59445,
+    lat: 6.22134
+  },
+  {
+    lng: -75.59397,
+    lat: 6.22125
+  },
+  {
+    lng: -75.59392,
+    lat: 6.22124
+  },
+  {
+    lng: -75.5935,
+    lat: 6.22116
+  }
+];
