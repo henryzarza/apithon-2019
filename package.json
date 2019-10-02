@@ -30,9 +30,11 @@
     "wolox-equalizer": "0.0.3"
   },
   "scripts": {
+    "build-sw": "node ./src/sw-build.js",
+    "clean-cra-sw": "rm -f build/precache-manifest.*.js && rm -f build/service-worker.js",
+    "build": "node ./scripts/build.js && npm run build-sw && npm run clean-cra-sw",
     "start": "node ./scripts/start.js development",
     "start-env": "node ./scripts/start.js",
-    "build": "node ./scripts/build.js",
     "deploy": "node ./scripts/deploy.js",
     "test": "rescripts test --env=jsdom",
     "eject": "./node_modules/react-scripts/bin/react-scripts.js eject",
@@ -85,7 +87,8 @@
     "stylelint": "^9.10.1",
     "stylelint-config-wolox": "^1.0.5",
     "stylelint-no-indistinguishable-colors": "^1.2.1",
-    "stylelint-scss": "^3.5.4"
+    "stylelint-scss": "^3.5.4",
+    "workbox-build": "^4.3.1"
   },
   "title": "apithon-2019",
   "repository": {
