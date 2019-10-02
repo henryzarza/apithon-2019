@@ -18,7 +18,7 @@ export const actionCreators = {
     failureSelector: response => response.error,
     injections: [
       withPostSuccess((_, response) => {
-        AuthService.setCurrentUser(response.data);
+        AuthService.setCurrentUser({ token: response.data.data.token, ...authData });
       })
     ]
   }),

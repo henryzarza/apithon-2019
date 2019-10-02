@@ -1,21 +1,25 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { t } from 'i18next';
+import { connect } from 'react-redux';
+import { func } from 'prop-types';
 
 import styles from './styles.module.scss';
 
 import Routes from '~constants/routes';
+import { actionCreators as authActions } from '~redux/Auth/actions';
+import LocalStorageService from '~services/LocalStorageService';
 
-function Navbar() {
+function Navbar({ logout }) {
+  const userData = LocalStorageService.getSessionToken();
   return (
     <nav className={`row space-between center ${styles.navbar}`}>
-      <h2 className={`title ${styles.title}`}>Username</h2>
+      <h2 className={`title ${styles.title}`}>Hola, {userData.username}</h2>
       <div className={`row ${styles.containerLinks}`}>
         <NavLink
           to={Routes.HOME}
           className={`row middle subtitle m-right-4 ${styles.link}`}
           activeClassName={styles.active}
-          exact
         >
           <i className="fas fa-map-signs m-right-1" />
           {t('Navbar:home')}
@@ -24,14 +28,28 @@ function Navbar() {
           to={Routes.PROFILE}
           className={`row middle subtitle ${styles.link}`}
           activeClassName={styles.active}
-          exact
         >
           <i className="fas fa-shoe-prints m-right-1" />
           {t('Navbar:profile')}
         </NavLink>
+        <button type="button" className={`row middle subtitle ${styles.link}`} onClick={logout}>
+          <i className="fas fa-sign-out-alt m-right-1" />
+          {t('Navbar:getOut')}
+        </button>
       </div>
     </nav>
   );
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: func.isRequired
+};
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(authActions.logout())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Navbar);
