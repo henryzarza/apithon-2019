@@ -18,8 +18,8 @@ function AppRoutes() {
       <div className={styles.container}>
         <Suspense>
           <Switch>
-            <AuthenticatedRoute isPrivateRoute path={Routes.HOME} component={Dashboard} />
             <AuthenticatedRoute isPublicRoute exact path={Routes.LOGIN} component={Login} />
+            <AuthenticatedRoute isPrivateRoute path={Routes.HOME} component={Dashboard} />
           </Switch>
         </Suspense>
       </div>
