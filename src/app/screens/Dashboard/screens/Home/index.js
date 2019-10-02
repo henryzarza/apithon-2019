@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { t } from 'i18next';
+import { connect } from 'react-redux';
+import { func } from 'prop-types';
 
 import GoogleMap from './components/GoogleMap';
 import Notification from './components/Notification';
 import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI, TRANSPORTATION_TYPES } from './constants';
 import styles from './styles.module.scss';
 
+import Modal from '~components/Modal';
 import Checkbox from '~components/Checkbox';
+import { actionCreators as modalActions } from '~redux/Modal/actions';
 
 class Home extends Component {
   state = { currentLocation: null, showNotification: false, errorMessage: null };
@@ -45,6 +49,7 @@ class Home extends Component {
 
   render() {
     const { showNotification, errorMessage, currentLocation } = this.state;
+    const { openModal, closeModal } = this.props;
     return (
       <>
         <Notification message={errorMessage} isVisible={showNotification} />
@@ -65,14 +70,39 @@ class Home extends Component {
                 />
               ))}
             </div>
-            <button type="button" className="primary-button">
+            <button type="button" className="primary-button" onClick={openModal}>
               {t('Home:startTrip')}
             </button>
           </div>
         </GoogleMap>
+        <Modal>
+          <div className="row">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil architecto beatae porro labore
+            ipsa! Incidunt labore quo quia porro placeat cum? Voluptates asperiores quos adipisci consequuntur
+            facere rem odio illo.
+            <div className="column">
+              <button type="button" className="secondary-button" onClick={closeModal}>
+                {t('Home:close')}
+              </button>
+            </div>
+          </div>
+        </Modal>
       </>
     );
   }
 }
 
-export default Home;
+Home.propTypes = {
+  closeModal: func.isRequired,
+  openModal: func.isRequired
+};
+
+const mapDispatchToProps = dispatch => ({
+  openModal: () => dispatch(modalActions.openModal()),
+  closeModal: () => dispatch(modalActions.closeModal())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Home);

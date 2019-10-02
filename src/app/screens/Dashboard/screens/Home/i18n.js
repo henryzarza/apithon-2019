@@ -7,5 +7,6 @@ i18next.addResources('es', 'Home', {
   TIMEOUT: 'El requerimiento expiró',
   UNKNOWN: 'Error desconocido.',
   checkboxTitle: 'Medios de sistema',
-  startTrip: 'Iniciar recorrido'
+  startTrip: 'Iniciar recorrido',
+  close: 'Cancelar'
 });

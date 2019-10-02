@@ -1,0 +1,35 @@
+@import 'src/scss/variables/colors';
+@import 'src/scss/variables/variables';
+
+.back-drop-modal {
+  background-color: rgba($cod-gray,0.3);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  z-index: $z-index-modal;
+}
+
+.modal-content {
+  background-color: $white;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba($cod-gray, 0.4);
+  max-width: 100%;
+  padding: 0 20px;
+  width: $max-width-modal-default;
+}
+
+.modalOpened {
+  animation: zoomIn $transition-duration $transition-function;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.3, 0.3, 0.3);
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
