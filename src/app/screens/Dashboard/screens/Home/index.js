@@ -3,7 +3,10 @@ import { t } from 'i18next';
 
 import GoogleMap from './components/GoogleMap';
 import Notification from './components/Notification';
-import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI } from './constants';
+import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI, TRANSPORTATION_TYPES } from './constants';
+import styles from './styles.module.scss';
+
+import Checkbox from '~components/Checkbox';
 
 class Home extends Component {
   state = { currentLocation: null, showNotification: false, errorMessage: null };
@@ -46,12 +49,25 @@ class Home extends Component {
       <>
         <Notification message={errorMessage} isVisible={showNotification} />
         <GoogleMap currentLocation={currentLocation}>
-          <div className="row">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Porro eius, rerum, quas itaque deserunt
-            animi fugiat, ea delectus eveniet eligendi debitis. Hic, aliquam nulla recusandae natus in
-            blanditiis quia facere.Soluta nobis porro quaerat quibusdam amet totam quo. Quidem ea dicta odio,
-            corrupti non ab nulla, dolorem laborum excepturi libero necessitatibus aliquid nemo similique quos
-            voluptates quod voluptatum praesentium quisquam?
+          <div className={`column ${styles.container}`}>
+            <span className="base-text m-bottom-2">{t('Home:checkboxTitle')}</span>
+            <div className="row space-around m-bottom-4">
+              {TRANSPORTATION_TYPES.map(el => (
+                <Checkbox
+                  key={el.id}
+                  id={el.id}
+                  className="m-right-1"
+                  label={el.label}
+                  name={el.name}
+                  type="radio"
+                  value={el.id}
+                  icon={el.icon}
+                />
+              ))}
+            </div>
+            <button type="button" className="primary-button">
+              {t('Home:startTrip')}
+            </button>
           </div>
         </GoogleMap>
       </>

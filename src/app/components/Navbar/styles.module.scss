@@ -20,7 +20,7 @@
 
   &.active,
   &:hover {
-    color: $rio-grande;
+    color: $limeade;
   }
 
   & > i {
@@ -58,7 +58,8 @@
 
     &:hover,
     &.active {
-      background-color: $coconut-cream;
+      background-color: $limeade;
+      color: $white;
     }
   }
 }

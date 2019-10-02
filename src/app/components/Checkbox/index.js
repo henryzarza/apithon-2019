@@ -1,59 +1,57 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { string, func, oneOfType, number } from 'prop-types';
+import cn from 'classnames';
 
-import Checkbox from './layout';
+import styles from './styles.module.scss';
 
-class CheckboxContainer extends Component {
-  state = { isChecked: this.props.isChecked };
-
-  handleToggle = event => {
+class Checkbox extends Component {
+  handleChange = event => {
     const { onChange } = this.props;
-
-    this.setState(({ isChecked }) => ({
-      isChecked: !isChecked
-    }));
     if (onChange) {
       onChange(event);
     }
   };
 
   render() {
-    const { className, inputClassName, labelClassName, label, name, disabled, required } = this.props;
-    const { isChecked } = this.state;
+    const { className, label, name, id, type, value, icon: Icon } = this.props;
 
     return (
-      <Checkbox
-        className={className}
-        inputClassName={inputClassName}
-        labelClassName={labelClassName}
-        label={label}
-        name={name}
-        isChecked={isChecked}
-        onToggle={this.handleToggle}
-        disabled={disabled}
-        required={required}
-      />
+      <div className={cn(styles.checkboxContainer, className)}>
+        <input
+          className={styles.checkbox}
+          type={type}
+          id={id}
+          name={name}
+          value={value}
+          onChange={this.handleChange}
+        />
+        {label && (
+          <label className={`column middle center ${styles.checkboxLabel}`} htmlFor={id}>
+            <span className={`row middle center m-bottom-1 ${styles.iconContainer}`}>
+              <Icon className={styles.icon} />
+            </span>
+            <span className="label-text">{label}</span>
+          </label>
+        )}
+      </div>
     );
   }
 }
 
-CheckboxContainer.defaultProps = {
+Checkbox.defaultProps = {
   className: '',
-  inputClassName: '',
-  isChecked: false,
-  labelClassName: ''
+  type: 'checkbox'
 };
 
-CheckboxContainer.propTypes = {
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  inputClassName: PropTypes.string,
-  isChecked: PropTypes.bool,
-  label: PropTypes.string,
-  labelClassName: PropTypes.string,
-  name: PropTypes.string,
-  required: PropTypes.bool,
-  onChange: PropTypes.func
+Checkbox.propTypes = {
+  className: string,
+  icon: string,
+  id: string,
+  label: string,
+  name: string,
+  type: string,
+  value: oneOfType([string, number]),
+  onChange: func
 };
 
-export default CheckboxContainer;
+export default Checkbox;
