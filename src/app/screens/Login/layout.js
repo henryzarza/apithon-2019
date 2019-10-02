@@ -55,4 +55,8 @@ Login.propTypes = {
   submitting: bool
 };
 
-export default reduxForm({ form: FORM_NAME, validate })(Login);
+export default reduxForm({
+  form: FORM_NAME,
+  validate,
+  initialValues: { [FIELDS.email]: 'apithon@test.com', [FIELDS.password]: '123apithon' }
+})(Login);
