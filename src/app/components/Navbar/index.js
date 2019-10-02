@@ -4,6 +4,8 @@ import { t } from 'i18next';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
 
+import { ReactComponent as IcHome } from './assets/home.svg';
+import { ReactComponent as IcTour } from './assets/tour.svg';
 import styles from './styles.module.scss';
 
 import Routes from '~constants/routes';
@@ -21,7 +23,7 @@ function Navbar({ logout }) {
           className={`row middle subtitle m-right-4 ${styles.link}`}
           activeClassName={styles.active}
         >
-          <i className="fas fa-map-signs m-right-1" />
+          <IcTour className={`m-right-1 ${styles.icon}`} />
           {t('Navbar:home')}
         </NavLink>
         <NavLink
@@ -29,10 +31,14 @@ function Navbar({ logout }) {
           className={`row middle subtitle ${styles.link}`}
           activeClassName={styles.active}
         >
-          <i className="fas fa-shoe-prints m-right-1" />
+          <IcHome className={`m-right-1 ${styles.icon}`} />
           {t('Navbar:profile')}
         </NavLink>
-        <button type="button" className={`row middle subtitle ${styles.link}`} onClick={logout}>
+        <button
+          type="button"
+          className={`row middle subtitle ${styles.link} ${styles.logout}`}
+          onClick={logout}
+        >
           <i className="fas fa-sign-out-alt m-right-1" />
           {t('Navbar:getOut')}
         </button>

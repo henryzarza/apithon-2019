@@ -29,13 +29,13 @@
 }
 
 .base-text {
-  color: $cod-gray;
+  color: $dove-gray;
   font-size: $font-size-base;
   line-height: 20px;
 }
 
 .label-text {
-  color: $cod-gray;
+  color: $dove-gray;
   font-size: #{$font-size-base - 1};
   line-height: 17px;
 }
@@ -64,19 +64,16 @@
 
   .subtitle-bold,
   .subtitle {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 18px;
   }
 
-  .highlight-text,
-  .field-message {
+  .label-text {
     font-size: 13px;
     line-height: 13px;
   }
 
-  .base-text,
-  .button-text,
-  .link-text {
+  .base-text {
     font-size: 14px;
     line-height: 17px;
   }

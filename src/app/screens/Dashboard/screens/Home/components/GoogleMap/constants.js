@@ -1,6 +1,6 @@
 export const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-export const DEFAULT_ZOOM = 8;
+export const DEFAULT_ZOOM = 14;
 
 export const MARKER_WIDTH = 30;
 

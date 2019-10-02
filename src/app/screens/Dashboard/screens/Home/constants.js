@@ -20,6 +20,8 @@ export const ERROR_TEXTS = {
 
 export const DEFAULT_TIME_SHOW_NOTI = 3000;
 
+export const TIME_GET_NEAREST = 10000;
+
 export const TRANSPORTATION_TYPES = [
   {
     id: 'bici',
