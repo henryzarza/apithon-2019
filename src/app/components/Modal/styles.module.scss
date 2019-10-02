@@ -11,16 +11,13 @@
 }
 
 .modal-content {
+  animation: zoomIn $transition-duration $transition-function;
   background-color: $white;
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 0 1px 4px rgba($cod-gray, 0.4);
   max-width: 100%;
-  padding: 0 20px;
+  padding: 15px 20px;
   width: $max-width-modal-default;
-}
-
-.modalOpened {
-  animation: zoomIn $transition-duration $transition-function;
 }
 
 @keyframes zoomIn {
@@ -31,5 +28,14 @@
 
   50% {
     opacity: 1;
+  }
+}
+
+@media only screen and (max-width: $small-device) {
+  .modal-content {
+    border-radius: 0;
+    height: 100vh;
+    padding: 20px 50px;
+    width: 100%;
   }
 }

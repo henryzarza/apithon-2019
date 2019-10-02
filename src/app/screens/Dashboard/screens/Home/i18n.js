@@ -8,5 +8,9 @@ i18next.addResources('es', 'Home', {
   UNKNOWN: 'Error desconocido.',
   checkboxTitle: 'Filtrar medios de transporte',
   startTrip: 'Iniciar recorrido',
-  close: 'Cancelar'
+  close: 'Cancelar',
+  ok: 'Entendido',
+  modalTitle: 'Vive tu ciudad con seguridad',
+  modalInfoText:
+    'Vas a comenzar tu recorrido por la ciudad, serás avisado de la calidad del aire en todo momento.'
 });

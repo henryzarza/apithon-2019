@@ -17,9 +17,13 @@
 }
 
 .container-hidden {
-
   @extend .container;
+
   display: none;
+}
+
+.modal-img {
+  width: 250px;
 }
 
 @media only screen and (max-width: $small-device) {

@@ -9,14 +9,14 @@
 }
 
 .title-small {
-  color: $cod-gray;
+  color: $dove-gray;
   font-size: 24px;
-  font-weight: 300;
+  font-weight: 600;
   line-height: 30px;
 }
 
 .subtitle-bold {
-  color: $cod-gray;
+  color: $dove-gray;
   font-size: 18px;
   font-weight: 600;
   line-height: 22px;
@@ -57,12 +57,12 @@
     line-height: 30px;
   }
 
-  .title-small {
+  .title-small,
+  .subtitle-bold {
     font-size: 18px;
     line-height: 28px;
   }
 
-  .subtitle-bold,
   .subtitle {
     font-size: 15px;
     line-height: 18px;
