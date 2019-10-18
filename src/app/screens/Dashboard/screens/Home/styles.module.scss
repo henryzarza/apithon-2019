@@ -1,20 +1,15 @@
 @import 'src/scss/variables/colors';
-@import 'src/scss/variables/variables';
 
 .container {
-  margin: 20px auto;
+  margin: 0 auto;
   max-width: 100%;
+  padding-bottom: 120px;
   width: 600px;
-}
-
-.title {
-  background-color: $white;
-  box-shadow: 0 1px 2px rgba($cod-gray, 0.2);
-  padding: 15px 10px;
 }
 
 .chart {
   height: 260px;
+  margin: 0 auto;
   max-width: 100%;
   width: 400px;
 }
@@ -23,8 +18,55 @@
   width: 250px;
 }
 
-@media only screen and (max-width: $small-device) {
-  .container {
-    margin: 0 auto;
+.header {
+  box-shadow: 0 2px 3px rgba($cod-gray, 0.2);
+  padding: 20px 10px 10px;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  right: 0;
+  top: 15px;
+  width: 100px;
+}
+
+.profile-photo {
+  border: 1px solid $wild-sand;
+  border-radius: 50%;
+  height: 120px;
+  width: 120px;
+}
+
+.chip {
+  border: 1px solid $dusty-gray;
+  border-radius: 20px;
+  height: 30px;
+  padding: 0 10px;
+
+  &:nth-child(4) {
+    background-color: $limeade;
+    border-color: $limeade;
+    color: $white;
+    font-weight: 600;
   }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.button-container {
+  background-color: $white;
+  bottom: 0;
+  box-shadow: 0 -2px 3px rgba($cod-gray, 0.2);
+  left: 0;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+}
+
+.custom-button {
+  max-width: 100%;
+  width: 320px;
 }

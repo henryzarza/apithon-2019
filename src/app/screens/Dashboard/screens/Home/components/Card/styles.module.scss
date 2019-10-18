@@ -1,0 +1,36 @@
+@import 'src/scss/variables/colors';
+@import 'src/scss/variables/variables';
+
+.container {
+  margin: 0 -10px;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 10px;
+  width: 600px;
+}
+
+.card {
+  border-radius: 20px;
+  box-shadow: 0 2px 8px 0 rgba($cod-gray,0.3);
+  min-width: 230px;
+}
+
+.map {
+  border-radius: 10px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 18px;
+}
+
+@media only screen and (max-width: $small-device) {
+  .container {
+    margin-left: 0;
+  }
+
+  .subtile {
+    padding-left: 10px;
+  }
+}

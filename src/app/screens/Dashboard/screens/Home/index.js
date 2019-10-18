@@ -5,9 +5,12 @@ import { connect } from 'react-redux';
 import { func } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { GRAPHIC_DATA, GRAPHIC_COLORS } from './constants';
+import Card from './components/Card';
+import { GRAPHIC_DATA, GRAPHIC_COLORS, DAYS } from './constants';
 import styles from './styles.module.scss';
 import city from './assets/city.svg';
+import bancolombiaLogo from './assets/bancolombia-logo.png';
+import manPhoto from './assets/man.jpg';
 
 import Modal from '~components/Modal';
 import Routes from '~constants/routes';
@@ -19,31 +22,55 @@ function Home({ openModal, closeModal }) {
 
   return (
     <>
-      <div className={`column center ${styles.container}`}>
-        <h3 className={`title-small full-width text-center m-bottom-6 ${styles.title}`}>
-          {userData.username}
-        </h3>
-        <p className="base-text m-bottom-4">{t('Profile:textExplanation')}</p>
+      <div className={styles.container}>
+        <div className={`column center full-width text-center m-bottom-2 ${styles.header}`}>
+          <img className={styles.logo} src={bancolombiaLogo} alt="" />
+          <img className={`m-bottom-3 ${styles.profilePhoto}`} src={manPhoto} alt="" />
+          <span className="subtitle-bold m-bottom-3">{userData.username}</span>
+          <div className="row space-between m-bottom-6">
+            <span className="base-text m-right-8">
+              {t('Home:route')} <span className="bold m-left-3">120 km</span>
+            </span>
+            <span className="base-text">
+              {t('Home:time')} <span className="bold m-left-3">85 {t('Home:hours')}</span>
+            </span>
+          </div>
+          <div className="row wrap space-arouns">
+            {DAYS.map(el => (
+              <span key={el} className={`base-text m-bottom-2 m-right-2 row middle ${styles.chip}`}>
+                {el}
+              </span>
+            ))}
+          </div>
+        </div>
         <Chart
           className={styles.chart}
           chartType="PieChart"
           data={GRAPHIC_DATA}
           options={{
-            pieHole: 0.4,
+            pieHole: 0.5,
             colors: GRAPHIC_COLORS,
-            legend: 'none'
+            legend: 'none',
+            height: 400
           }}
           rootProps={{ 'data-testid': '3' }}
         />
-        <button type="button" className="button primary-button" onClick={openModal}>
-          {t('Home:startTrip')}
-        </button>
+        <Card />
+        <div className={`row center ${styles.buttonContainer}`}>
+          <button
+            type="button"
+            className={`button primary-button ${styles.customButton}`}
+            onClick={openModal}
+          >
+            {t('Home:startTrip')}
+          </button>
+        </div>
       </div>
       <Modal>
         <div className="column center middle full-height">
-          <h3 className="subtitle m-bottom-8">{t('Home:modalTitle')}</h3>
+          <h3 className="title m-bottom-8">{t('Home:modalTitle')}</h3>
           <img src={city} alt="" className={`m-bottom-8 ${styles.modalImg}`} />
-          <p className="base-text m-bottom-8">{t('Home:modalInfoText')}</p>
+          <p className="base-text text-center m-bottom-8">{t('Home:modalInfoText')}</p>
           <div className="column full-width m-bottom-4">
             <NavLink to={Routes.TRIP} className="button primary-button text-center m-bottom-5">
               {t('Home:ok')}
