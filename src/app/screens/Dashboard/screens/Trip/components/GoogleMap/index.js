@@ -1,42 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import { compose, withProps } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import cn from 'classnames';
 import { shape, arrayOf } from 'prop-types';
 
-import person from '../../assets/pin.svg';
-import cloud from '../../assets/cloud.svg';
-import redCloud from '../../assets/redCloud.svg';
-
 import styles from './styles.module.scss';
+import { GOOGLE_MAPS_API_KEY, DEFAULT_ZOOM, DEFAULT_CENTER } from './constants';
+import { getMarkerIcon } from './utils';
 import mapStyles from './map-styles';
-import {
-  GOOGLE_MAPS_API_KEY,
-  DEFAULT_ZOOM,
-  MARKER_HEIGHT,
-  MARKER_OFFSET_HORIZONTAL,
-  MARKER_OFFSET_VERTICAL,
-  MARKER_WIDTH
-} from './constants';
 
 import LocalStorageService from '~services/LocalStorageService';
 
 class Map extends Component {
+  mapRef = createRef();
+
+  componentDidUpdate(prevProp) {
+    const { currentLocation } = this.props;
+    if (JSON.stringify(currentLocation) !== JSON.stringify(prevProp.currentLocation) && this.mapRef) {
+      this.mapRef.current.panTo(currentLocation);
+    }
+  }
+
   render() {
     const { currentLocation, children, measurements } = this.props;
-    const defaultCenter = currentLocation || { lat: 6.2486, lng: -75.56359 };
-    const { Size, Point, Animation } = window.google.maps;
-    const ICON_MARKER = {
-      scaledSize: new Size(MARKER_HEIGHT, MARKER_WIDTH),
-      anchor: new Point(MARKER_WIDTH / 2 + MARKER_OFFSET_HORIZONTAL, MARKER_HEIGHT + MARKER_OFFSET_VERTICAL)
-    };
+    const { Animation } = window.google.maps;
     const userData = LocalStorageService.getSessionToken();
 
     return (
       <GoogleMap
-        ref={this.setMapRef}
+        ref={this.mapRef}
         defaultZoom={DEFAULT_ZOOM}
-        defaultCenter={defaultCenter}
+        defaultCenter={DEFAULT_CENTER}
         defaultOptions={{
           styles: mapStyles,
           streetViewControl: false,
@@ -52,18 +46,15 @@ class Map extends Component {
           measurements.map(el => (
             <Marker
               key={el.id}
-              icon={{ url: el.active ? cloud : redCloud, ...ICON_MARKER }}
+              icon={getMarkerIcon(el.polutionLevel.label)}
               position={{ lat: el.latitude, lng: el.longitude }}
               animation={Animation.DROP}
               title={`${el.town} - ${el.name}`}
             />
           ))}
-        <Marker
-          title={userData.username}
-          icon={{ url: person, ...ICON_MARKER }}
-          position={defaultCenter}
-          animation={Animation.DROP}
-        />
+        {currentLocation && (
+          <Marker title={userData.username} position={currentLocation} animation={Animation.DROP} />
+        )}
         {children}
       </GoogleMap>
     );

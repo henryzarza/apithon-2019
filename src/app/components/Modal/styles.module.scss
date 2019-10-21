@@ -20,6 +20,10 @@
   width: $max-width-modal-default;
 }
 
+.no-padding-x {
+  padding: 15px 0;
+}
+
 @keyframes zoomIn {
   from {
     opacity: 0;

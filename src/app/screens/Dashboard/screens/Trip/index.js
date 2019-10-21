@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import { t } from 'i18next';
 import { connect } from 'react-redux';
 import { func, arrayOf, shape } from 'prop-types';
-import cn from 'classnames';
 import { NavLink } from 'react-router-dom';
 
+import InformationModal from './components/InformationModal';
 import GoogleMap from './components/GoogleMap';
 import Notification from './components/Notification';
-import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI, TRANSPORTATION_TYPES, TIME_GET_NEAREST } from './constants';
+import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI, TRANSPORTATION_TYPES } from './constants';
 import styles from './styles.module.scss';
 
 import Routes from '~constants/routes';
 import Checkbox from '~components/Checkbox';
 import { actionCreators as homeActions } from '~redux/Home/actions';
-import { NEAREST_TARGET, MEASUREMENTS_TARGET } from '~redux/Home/constants';
+import { MEASUREMENTS_TARGET } from '~redux/Home/constants';
 
 class Trip extends Component {
-  state = { currentLocation: null, showNotification: false, errorMessage: null, transportTypeOpen: false };
+  state = { currentLocation: null, showNotification: false, errorMessage: null };
 
   componentDidMount() {
     this.props.getMeasurements();
@@ -26,25 +26,12 @@ class Trip extends Component {
   getCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(location => {
-        this.setState(
-          {
-            currentLocation: { lat: location.coords.latitude, lng: location.coords.longitude }
-          },
-          this.subscribeGetNearest()
-        );
+        this.setState({
+          currentLocation: { lat: location.coords.latitude, lng: location.coords.longitude }
+        });
       }, this.showError);
     }
   };
-
-  subscribeGetNearest = () => {
-    this.interval = setInterval(() => {
-      this.props.getNearest(this.state.currentLocation);
-    }, TIME_GET_NEAREST);
-  };
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
 
   showError = error => {
     this.setState(
@@ -64,19 +51,15 @@ class Trip extends Component {
     }, DEFAULT_TIME_SHOW_NOTI);
   };
 
-  handleClickTypes = () => this.setState(prevState => ({ transportTypeOpen: !prevState.transportTypeOpen }));
-
   render() {
-    const { showNotification, errorMessage, currentLocation, transportTypeOpen } = this.state;
+    const { showNotification, errorMessage, currentLocation } = this.state;
     const { measurements } = this.props;
     return (
       <>
+        <InformationModal />
         <Notification message={errorMessage} isVisible={showNotification} />
         <GoogleMap currentLocation={currentLocation} measurements={measurements}>
-          <div
-            className={cn(`column ${styles.container}`, { [styles.open]: transportTypeOpen })}
-            onClick={this.handleClickTypes}
-          >
+          <div className={`column ${styles.container}`}>
             <span className="base-text bold m-bottom-2">{t('Home:checkboxTitle')}</span>
             <div className="row space-around m-bottom-4">
               {TRANSPORTATION_TYPES.map(el => (
@@ -104,17 +87,14 @@ class Trip extends Component {
 
 Trip.propTypes = {
   getMeasurements: func.isRequired,
-  getNearest: func.isRequired,
   measurements: arrayOf(shape())
 };
 
 const mapStateToProps = store => ({
-  nearest: store.home[NEAREST_TARGET],
   measurements: store.home[MEASUREMENTS_TARGET]
 });
 
 const mapDispatchToProps = dispatch => ({
-  getNearest: data => dispatch(homeActions.getNearest(data)),
   getMeasurements: () => dispatch(homeActions.getMeasurements())
 });
 
