@@ -13,3 +13,5 @@ export const GRAPHIC_DATA = [
 ];
 
 export const GRAPHIC_COLORS = ['#87d1e5', '#76a2e9', '#6771ed', '#a774b7', '#fe7a6b'];
+
+export const DAYS = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
