@@ -1,6 +1,3 @@
-const white = '#FFFFFF';
-const mineShaft = '#323232';
-const silver = '#C0C0C0';
 const gray = '#808080';
 const gallery = '#EFEFEF';
 
@@ -9,40 +6,7 @@ export default [
     elementType: 'geometry',
     stylers: [
       {
-        color: white
-      }
-    ]
-  },
-  {
-    elementType: 'labels.icon',
-    stylers: [
-      {
-        visibility: 'off'
-      }
-    ]
-  },
-  {
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: mineShaft
-      }
-    ]
-  },
-  {
-    elementType: 'labels.text.stroke',
-    stylers: [
-      {
-        color: white
-      }
-    ]
-  },
-  {
-    featureType: 'administrative.land_parcel',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: silver
+        color: '#D8E9FE'
       }
     ]
   },
@@ -51,7 +15,7 @@ export default [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#eeeeee'
+        color: '#EEEEEE'
       }
     ]
   },
@@ -69,7 +33,7 @@ export default [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#e5e5e5'
+        color: '#E5E5E5'
       }
     ]
   },
@@ -78,7 +42,7 @@ export default [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#9e9e9e'
+        color: '#757575'
       }
     ]
   },
@@ -87,16 +51,7 @@ export default [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#ffffff'
-      }
-    ]
-  },
-  {
-    featureType: 'road.arterial',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off'
+        color: '#FFFFFF'
       }
     ]
   },
@@ -114,33 +69,7 @@ export default [
     elementType: 'geometry',
     stylers: [
       {
-        color: '#dadada'
-      }
-    ]
-  },
-  {
-    featureType: 'road.highway',
-    elementType: 'labels',
-    stylers: [
-      {
-        visibility: 'off'
-      }
-    ]
-  },
-  {
-    featureType: 'road.highway',
-    elementType: 'labels.text.fill',
-    stylers: [
-      {
-        color: mineShaft
-      }
-    ]
-  },
-  {
-    featureType: 'road.local',
-    stylers: [
-      {
-        visibility: 'off'
+        color: '#DADADA'
       }
     ]
   },
@@ -149,7 +78,7 @@ export default [
     elementType: 'labels.text.fill',
     stylers: [
       {
-        color: '#9e9e9e'
+        color: '#9E9E9E'
       }
     ]
   },

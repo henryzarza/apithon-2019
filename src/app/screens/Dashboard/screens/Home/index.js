@@ -66,18 +66,22 @@ function Home({ openModal, closeModal }) {
           </button>
         </div>
       </div>
-      <Modal>
-        <div className="column center middle full-height">
-          <h3 className="title m-bottom-8">{t('Home:modalTitle')}</h3>
-          <img src={city} alt="" className={`m-bottom-8 ${styles.modalImg}`} />
-          <p className="base-text text-center m-bottom-8">{t('Home:modalInfoText')}</p>
-          <div className="column full-width m-bottom-4">
-            <NavLink to={Routes.TRIP} className="button primary-button text-center m-bottom-5">
-              {t('Home:ok')}
-            </NavLink>
-            <button type="button" className="secondary-button" onClick={closeModal}>
-              {t('Home:close')}
-            </button>
+      <Modal noPaddingX>
+        <div className={`column center middle ${styles.modalContainer}`}>
+          <h3 className={`subtitle-bold text-center cod-gray-color ${styles.modalTitle}`}>
+            {t('Home:modalTitle')}
+          </h3>
+          <img src={city} alt="" className="m-bottom-4 full-width" />
+          <div className="column center m-right-4 m-left-4">
+            <p className="base-text text-center m-bottom-8">{t('Home:modalInfoText')}</p>
+            <div className="column full-width m-bottom-2">
+              <NavLink to={Routes.TRIP} className="button primary-button text-center m-bottom-5">
+                {t('Home:ok')}
+              </NavLink>
+              <button type="button" className="secondary-button" onClick={closeModal}>
+                {t('Home:close')}
+              </button>
+            </div>
           </div>
         </div>
       </Modal>
