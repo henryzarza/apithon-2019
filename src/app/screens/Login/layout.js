@@ -3,7 +3,7 @@ import { func, bool } from 'prop-types';
 import { t } from 'i18next';
 import { Field, reduxForm } from 'redux-form';
 
-import logo from './assets/logo.svg';
+import logo from './assets/logo.png';
 import { FIELDS, FORM_NAME } from './constants';
 import { validate } from './validate';
 import styles from './styles.module.scss';
