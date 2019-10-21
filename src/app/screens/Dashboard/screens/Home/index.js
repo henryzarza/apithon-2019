@@ -1,153 +1,105 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Chart } from 'react-google-charts';
 import { t } from 'i18next';
 import { connect } from 'react-redux';
-import { func, arrayOf, shape } from 'prop-types';
-import cn from 'classnames';
+import { func } from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
-import GoogleMap from './components/GoogleMap';
-import Notification from './components/Notification';
-import { ERROR_TEXTS, DEFAULT_TIME_SHOW_NOTI, TRANSPORTATION_TYPES, TIME_GET_NEAREST } from './constants';
+import Card from './components/Card';
+import { GRAPHIC_DATA, GRAPHIC_COLORS, DAYS } from './constants';
 import styles from './styles.module.scss';
 import city from './assets/city.svg';
+import bancolombiaLogo from './assets/bancolombia-logo.png';
+import manPhoto from './assets/man.jpg';
 
 import Modal from '~components/Modal';
-import Checkbox from '~components/Checkbox';
+import Routes from '~constants/routes';
 import { actionCreators as modalActions } from '~redux/Modal/actions';
-import { actionCreators as homeActions } from '~redux/Home/actions';
-import { NEAREST_TARGET, MEASUREMENTS_TARGET } from '~redux/Home/constants';
+import LocalStorageService from '~services/LocalStorageService';
 
-class Home extends Component {
-  state = { currentLocation: null, showNotification: false, errorMessage: null, transportTypeOpen: false };
+function Home({ openModal, closeModal }) {
+  const userData = LocalStorageService.getSessionToken();
 
-  componentDidMount() {
-    this.props.getMeasurements();
-  }
-
-  getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(location => {
-        this.setState(
-          {
-            currentLocation: { lat: location.coords.latitude, lng: location.coords.longitude }
-          },
-          this.subscribeGetNearest()
-        );
-      }, this.showError);
-    }
-  };
-
-  subscribeGetNearest = () => {
-    this.interval = setInterval(() => {
-      this.props.getNearest(this.state.currentLocation);
-    }, TIME_GET_NEAREST);
-  };
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  showError = error => {
-    this.setState(
-      {
-        showNotification: true,
-        errorMessage: ERROR_TEXTS[error.code] || t('Home:UNKNOWN')
-      },
-      this.hiddenNotification()
-    );
-  };
-
-  hiddenNotification = () => {
-    setTimeout(() => {
-      this.setState({
-        showNotification: false
-      });
-    }, DEFAULT_TIME_SHOW_NOTI);
-  };
-
-  handleStartTrip = () => {
-    this.props.closeModal();
-    this.getCurrentLocation();
-  };
-
-  handleClickTypes = () => this.setState(prevState => ({ transportTypeOpen: !prevState.transportTypeOpen }));
-
-  render() {
-    const { showNotification, errorMessage, currentLocation, transportTypeOpen } = this.state;
-    const { openModal, closeModal, measurements } = this.props;
-    return (
-      <>
-        <Notification message={errorMessage} isVisible={showNotification} />
-        <GoogleMap currentLocation={currentLocation} measurements={measurements}>
-          <div
-            className={cn(`column ${styles.container}`, { [styles.open]: transportTypeOpen })}
-            onClick={this.handleClickTypes}
+  return (
+    <>
+      <div className={styles.container}>
+        <div className={`column center full-width text-center m-bottom-2 ${styles.header}`}>
+          <img className={styles.logo} src={bancolombiaLogo} alt="" />
+          <img className={`m-bottom-3 ${styles.profilePhoto}`} src={manPhoto} alt="" />
+          <span className="subtitle-bold m-bottom-3">{userData.username}</span>
+          <div className="row space-between m-bottom-6">
+            <span className="base-text m-right-8">
+              {t('Home:route')} <span className="bold m-left-3">120 km</span>
+            </span>
+            <span className="base-text">
+              {t('Home:time')} <span className="bold m-left-3">85 {t('Home:hours')}</span>
+            </span>
+          </div>
+          <div className="row wrap space-arouns">
+            {DAYS.map(el => (
+              <span key={el} className={`base-text m-bottom-2 m-right-2 row middle ${styles.chip}`}>
+                {el}
+              </span>
+            ))}
+          </div>
+        </div>
+        <Chart
+          className={styles.chart}
+          chartType="PieChart"
+          data={GRAPHIC_DATA}
+          options={{
+            pieHole: 0.5,
+            colors: GRAPHIC_COLORS,
+            legend: 'none',
+            height: 400
+          }}
+          rootProps={{ 'data-testid': '3' }}
+        />
+        <Card />
+        <div className={`row center ${styles.buttonContainer}`}>
+          <button
+            type="button"
+            className={`button primary-button ${styles.customButton}`}
+            onClick={openModal}
           >
-            <span className="base-text bold m-bottom-2">{t('Home:checkboxTitle')}</span>
-            <div className="row space-around m-bottom-4">
-              {TRANSPORTATION_TYPES.map(el => (
-                <Checkbox
-                  key={el.id}
-                  id={el.id}
-                  className="m-right-1"
-                  label={el.label}
-                  name={el.name}
-                  type="radio"
-                  value={el.id}
-                  icon={el.icon}
-                />
-              ))}
-            </div>
-            <button type="button" className={`primary-button ${styles.btnInside}`} onClick={openModal}>
-              {t('Home:startTrip')}
-            </button>
-          </div>
-          <div className={`row center middle ${styles.containerHidden}`}>
-            <button type="button" className="primary-button" onClick={openModal}>
-              {t('Home:startTrip')}
-            </button>
-          </div>
-        </GoogleMap>
-        <Modal>
-          <div className="column center middle full-height">
-            <h3 className="subtitle m-bottom-8">{t('Home:modalTitle')}</h3>
-            <img src={city} alt="" className={`m-bottom-8 ${styles.modalImg}`} />
-            <p className="base-text m-bottom-8">{t('Home:modalInfoText')}</p>
-            <div className="column full-width m-bottom-4">
-              <button type="button" className="primary-button m-bottom-5" onClick={this.handleStartTrip}>
+            {t('Home:startTrip')}
+          </button>
+        </div>
+      </div>
+      <Modal noPaddingX>
+        <div className={`column center middle ${styles.modalContainer}`}>
+          <h3 className={`subtitle-bold text-center cod-gray-color ${styles.modalTitle}`}>
+            {t('Home:modalTitle')}
+          </h3>
+          <img src={city} alt="" className="m-bottom-4 full-width" />
+          <div className="column center m-right-4 m-left-4">
+            <p className="base-text text-center m-bottom-8">{t('Home:modalInfoText')}</p>
+            <div className="column full-width m-bottom-2">
+              <NavLink to={Routes.TRIP} className="button primary-button text-center m-bottom-5">
                 {t('Home:ok')}
-              </button>
+              </NavLink>
               <button type="button" className="secondary-button" onClick={closeModal}>
                 {t('Home:close')}
               </button>
             </div>
           </div>
-        </Modal>
-      </>
-    );
-  }
+        </div>
+      </Modal>
+    </>
+  );
 }
 
 Home.propTypes = {
   closeModal: func.isRequired,
-  getMeasurements: func.isRequired,
-  getNearest: func.isRequired,
-  openModal: func.isRequired,
-  measurements: arrayOf(shape())
+  openModal: func.isRequired
 };
 
-const mapStateToProps = store => ({
-  nearest: store.home[NEAREST_TARGET],
-  measurements: store.home[MEASUREMENTS_TARGET]
-});
-
 const mapDispatchToProps = dispatch => ({
-  getNearest: data => dispatch(homeActions.getNearest(data)),
-  getMeasurements: () => dispatch(homeActions.getMeasurements()),
   openModal: () => dispatch(modalActions.openModal()),
   closeModal: () => dispatch(modalActions.closeModal())
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Home);

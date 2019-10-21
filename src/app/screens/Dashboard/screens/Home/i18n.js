@@ -11,5 +11,9 @@ i18next.addResources('es', 'Home', {
   ok: 'Entendido',
   modalTitle: 'Vive tu ciudad con seguridad',
   modalInfoText:
-    'Vas a comenzar tu recorrido por la ciudad, serás avisado de la calidad del aire en todo momento.'
+    'Vas a comenzar tu recorrido por la ciudad, serás avisado de la calidad del aire en todo momento.',
+  route: 'Recorrido',
+  time: 'Tiempo',
+  hours: 'Horas',
+  routes: 'Recorridos'
 });
