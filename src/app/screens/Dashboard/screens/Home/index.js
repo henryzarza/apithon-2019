@@ -67,7 +67,7 @@ function Home({ openModal, closeModal }) {
         </div>
       </div>
       <Modal noPaddingX>
-        <div className={`column center middle ${styles.modalContainer}`}>
+        <div className="column center middle">
           <h3 className={`subtitle-bold text-center cod-gray-color ${styles.modalTitle}`}>
             {t('Home:modalTitle')}
           </h3>

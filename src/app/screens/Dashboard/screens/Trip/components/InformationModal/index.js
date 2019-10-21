@@ -13,8 +13,10 @@ import { actionCreators as modalActions } from '~redux/Modal/actions';
 
 class InformationModal extends Component {
   componentDidMount() {
+    const { closeModal, openModal } = this.props;
+    closeModal();
     setTimeout(() => {
-      this.props.openModal();
+      openModal();
     }, MOCK_TIME_SHOW);
   }
 
@@ -23,11 +25,11 @@ class InformationModal extends Component {
 
     return (
       <Modal>
-        <div className="column center">
+        <div className="column center text-center">
           <span className="subtitle text-center m-bottom-4">{t('Trip:modalInfo')}</span>
           <img className={`m-bottom-3 ${styles.img}`} src={logo} alt="" />
           <span className="subtitle-bold m-bottom-2">{t('Trip:modalWarningInfo')}</span>
-          <p className="base-text m-bottom-3">{t('Trip:modalInfoRecomendation')}</p>
+          <p className="base-text m-bottom-5">{t('Trip:modalInfoRecomendation')}</p>
           <button type="button" className="full-width primary-button" onClick={closeModal}>
             {t('Home:ok')}
           </button>

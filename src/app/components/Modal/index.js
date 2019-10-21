@@ -13,7 +13,7 @@ function Modal({ children, isOpen, noPaddingX }) {
     isOpen &&
     ReactDOM.createPortal(
       <div className={`row middle center full-width ${styles.backDropModal}`}>
-        <div className={cn(`column ${styles.modalContent}`, { [styles.noPaddingX]: noPaddingX })}>
+        <div className={cn(`column middle ${styles.modalContent}`, { [styles.noPaddingX]: noPaddingX })}>
           {children}
         </div>
       </div>,
